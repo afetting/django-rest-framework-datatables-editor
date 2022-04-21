@@ -67,12 +67,10 @@ class EditorModelMixin(object):
                     continue
                     
                 # Get queryset or run function get_queryset
-                if self.queryset != None:
-                    queryset = self.queryset
-                else:
-                    queryset = self.get_queryset()
-                    
-                elem = get_object_or_404(queryset, pk=elem_id)
+                if self.queryset == None:
+                    self.queryset = self.get_queryset()
+
+                elem = get_object_or_404(self.queryset, pk=elem_id)
                 if act == 'edit':
                     check_fields(self.serializer_class, data)
                     serializer = self.serializer_class(
