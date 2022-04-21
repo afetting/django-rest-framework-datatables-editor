@@ -65,12 +65,8 @@ class EditorModelMixin(object):
                     serializer.save()
                     return_data.append(serializer.data)
                     continue
-                    
-                # Get queryset or run function get_queryset
-                if self.queryset == None:
-                    self.queryset = self.get_queryset()
 
-                elem = get_object_or_404(self.queryset, pk=elem_id)
+                elem = get_object_or_404(self.get_queryset(), pk=elem_id)
                 if act == 'edit':
                     check_fields(self.serializer_class, data)
                     serializer = self.serializer_class(
